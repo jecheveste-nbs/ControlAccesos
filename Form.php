@@ -6,13 +6,18 @@
     body {font-family: Arial, Helvetica, sans-serif;}
 
     /* Full-width input fields */
-    input[type=text], input[type=password] {
+    input[type=text], input[type=password],select {
       width: 100%;
       padding: 12px 20px;
       margin: 8px 0;
       display: inline-block;
       border: 1px solid #ccc;
       box-sizing: border-box;
+    }
+    option{
+        background-color:#025537;
+        color:white;
+
     }
 
     /* Set a style for all buttons */
@@ -51,6 +56,7 @@
 
     .container {
       padding: 16px;
+      margin-inline: auto;
     }
 
     span.psw {
@@ -79,11 +85,17 @@
       margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
       border: 1px solid #888;
       width: 80%; /* Could be more or less, depending on screen size */
+      max-width:800px;
     }
+    h2{
+        display:flex;
+        flex-direction:row;
+        justify-content: center;
 
+    }
     /* The Close Button (x) */
     .close {
-          position: absolute;
+      position: absolute;
       right: 25px;
       top: 0;
       color: #000;
@@ -129,28 +141,42 @@
 
 <h2>Darse de alta en el sistema </h2>
 
+
+
 <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Darse de alta</button>
 
 <div id="id01" class="modal">
   
-  <form class="modal-content animate" action="/action_page.php" method="post">
-    <div class="imgcontainer">
-      <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-    </div>
-
-    <div class="container">
-      <label for="uname"><b>Nombre</b></label>
-      <input type="text" placeholder="Introduce tu nombre" name="uname" required>
-
-      <label for="psw"><b>Apellidos </b></label>
-      <input type="text" placeholder="Introduce tu apellido" name="psw" required>
+    <form class="modal-content animate" action="/action_page.php" method="post">
         
-      <button type="submit">Enrolarse</button>
-      
-    </div>
 
-    <div class="container" style="background-color:#f1f1f1">
-      <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+        <div class="container">
+        <h2>Darse de alta en el sistema </h2>
+            <label for="nombre"><b>Nombre</b></label>
+            <input type="text" placeholder="Introduce tu nombre" name="nombre" required>
+            <label for="apellido"><b>Apellido(s) </b></label>
+            <input type="text" placeholder="Introduce tu apellido" name="apellido" required>
+            <label for="grupo"><b>Grupo </b></label>
+            <select name="grupo" id="selector">
+            <?php
+                require_once("/var/www/html/nbs/plt/nsLoader.php");
+
+                $iDb=DbGet();
+                $iSql="SELECT IdGrupo,Descripcion FROM nbs_accesos.nsgrupos;";
+
+                $iReg=DbGetReg($iSql,$iDb);
+
+                if ($iReg!==false){        
+                    while ($iRow = $iReg->fetch_assoc()) {
+                        echo ('<option value="'.$iRow["IdGrupo"].'">'.$iRow["Descripcion"].'</option>');
+                    }
+                }
+                ?>
+            </select>
+            <button type="submit">Enrolarse</button>
+        </div>
+        <div class="container" style="background-color:#f1f1f1">
+            <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
     </div>
   </form>
 </div>
