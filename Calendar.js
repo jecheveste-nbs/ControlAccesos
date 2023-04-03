@@ -534,9 +534,9 @@
     
         // called when a single event's data has been changed
         function reportEventChange(eventID) {
-            alert("reported");
+
             
-            require_once("/var/www/html/nbs/CustomApp/PlataformaPrueba/api/index.php");
+
             rerenderEvents(eventID);
         }
     
@@ -4740,6 +4740,9 @@
         function eventDrop(e, event, dayDelta, minuteDelta, allDay, ev, ui) {
             var oldAllDay = event.allDay;
             var eventId = event._id;
+            const response = confirm("¿Esta seguro que desea cambiar su cita a esta hora?");
+            console.log(response);
+            alert("hay que cambiar en eventDrop");
             moveEvents(eventsByID[eventId], dayDelta, minuteDelta, allDay);
             trigger(
                 'eventDrop',
@@ -4748,6 +4751,7 @@
                 dayDelta,
                 minuteDelta,
                 allDay,
+
                 function() {
                     // TODO: investigate cases where this inverse technique might not work
                     moveEvents(eventsByID[eventId], -dayDelta, -minuteDelta, oldAllDay);
