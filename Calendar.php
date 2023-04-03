@@ -13,7 +13,22 @@
 <head>
     
 
+<?php 
+//require_once("/var/www/html/nbs/CustomApp/PlataformaPrueba/api/index.php");
+require_once("/var/www/html/nbs/plt/nsLoader.php");
+$iDb=DbGet();
+$iSql="SELECT * FROM nbs_accesos.nsreservas;";
+$iReg=DbGetReg($iSql,$iDb);
+echo ("<script> ");
+if ($iReg!==false){        
+    while ($iRow = $iReg->fetch_assoc()) {
+        var_dump($iRow);
+    }
+}
 
+
+echo ("</script>");
+?>
 
 <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
 
