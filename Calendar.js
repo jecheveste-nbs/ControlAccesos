@@ -534,6 +534,9 @@
     
         // called when a single event's data has been changed
         function reportEventChange(eventID) {
+            alert("reported");
+            
+            require_once("/var/www/html/nbs/CustomApp/PlataformaPrueba/api/index.php");
             rerenderEvents(eventID);
         }
     
@@ -4091,6 +4094,7 @@
                 stop: function(ev, ui) {
                     hoverListener.stop();
                     clearOverlays();
+                    
                     trigger('eventDragStop', eventElement, event, ev, ui);
                     if (revert) {
                         // hasn't moved or is out of bounds (draggable has already reverted)

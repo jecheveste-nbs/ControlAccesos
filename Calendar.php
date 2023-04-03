@@ -1,7 +1,9 @@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 
+<!--      Calendario que se ha usado: https://bootsnipp.com/snippets/M3jmA     -->
 
 <link href="Calendar.css" rel="stylesheet" >
 <script src="Calendar.js"></script>
@@ -12,23 +14,6 @@
 <html>
 <head>
     
-
-<?php 
-//require_once("/var/www/html/nbs/CustomApp/PlataformaPrueba/api/index.php");
-require_once("/var/www/html/nbs/plt/nsLoader.php");
-$iDb=DbGet();
-$iSql="SELECT * FROM nbs_accesos.nsreservas;";
-$iReg=DbGetReg($iSql,$iDb);
-echo ("<script> ");
-if ($iReg!==false){        
-    while ($iRow = $iReg->fetch_assoc()) {
-        var_dump($iRow);
-    }
-}
-
-
-echo ("</script>");
-?>
 
 <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
 
@@ -140,50 +125,34 @@ echo ("</script>");
 			},
 			
 			events: [
-				{
-					title: 'All Day Event',
-					start: new Date(y, m, 1)
-				},
-				{
-					id: 999,
-					title: 'Repeating Event',
-					start: new Date(y, m, d-3, 16, 0),
-					allDay: false,
-					className: 'info'
-				},
-				{
-					id: 999,
-					title: 'Repeating Event',
-					start: new Date(y, m, d+4, 16, 0),
-					allDay: false,
-					className: 'info'
-				},
-				{
-					title: 'Meeting',
-					start: new Date(y, m, d, 10, 30),
-					allDay: false,
-					className: 'important'
-				},
-				{
-					title: 'Lunch',
-					start: new Date(y, m, d, 12, 0),
-					end: new Date(y, m, d, 14, 0),
-					allDay: false,
-					className: 'important'
-				},
-				{
-					title: 'Birthday Party',
-					start: new Date(y, m, d+1, 19, 0),
-					end: new Date(y, m, d+1, 22, 30),
-					allDay: false,
-				},
-				{
-					title: 'Click for Google',
-					start: new Date(y, m, 28),
-					end: new Date(y, m, 29),
-					url: 'https://ccp.cloudaccess.net/aff.php?aff=5188',
-					className: 'success'
-				}
+                <?php 
+                    //require_once("/var/www/html/nbs/CustomApp/PlataformaPrueba/api/index.php");
+                    require_once("/var/www/html/nbs/plt/nsLoader.php");
+                    $iDb=DbGet();
+                    $iSql="SELECT * FROM nbs_accesos.nsreservas;";
+                    $iReg=DbGetReg($iSql,$iDb);
+                    $primeralinea=true;
+                    if ($iReg!==false){        
+                        while ($iRow = $iReg->fetch_assoc()) {
+                            if ($primeralinea==true){
+                                Imprimireventos($iRow);
+                                $primeralinea=false;
+                            }
+                            else{
+                                echo (",");
+                                Imprimireventos($iRow);
+                            }
+                        }
+                    }
+
+                    function  Imprimireventos($iRow){
+                        $fecha=explode("-",$iRow["fechaentrada"]);
+                        $horasalida=explode(":",$iRow["horasalida"]);
+                        $horaentrada=explode(":",$iRow["horaentrada"]);
+                        echo("{id: '".$iRow["idreunion"]."',title:'".$iRow["NombreReunion"]."',start: new Date(".$fecha[0].",".$fecha[1].",".$fecha[2].",".$horaentrada[0].",".$horaentrada[1].",".$horaentrada[2]."),end:new Date(".$fecha[0].",".$fecha[1].",".$fecha[2].",".$horasalida[0].",".$horasalida[1].",".$horasalida[2]."),allDay:false,className:'important'}");
+                    }
+                ?>
+				
 			],			
 		});
 		
@@ -199,7 +168,6 @@ echo ("</script>");
 		text-align: center;
 		font-size: 14px;
 		font-family: 'Roboto', sans-serif;
-		background:url(http://www.digiphotohub.com/wp-content/uploads/2015/09/bigstock-Abstract-Blurred-Background-Of-92820527.jpg);
 		}
 		
 	#wrap {
