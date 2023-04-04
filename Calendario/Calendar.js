@@ -124,7 +124,7 @@
     
     
     $.fn.fullCalendar = function(options) {
-        //console.log(options.events);
+
     
         // method calling
         if (typeof options == 'string') {
@@ -2361,7 +2361,6 @@
             var contentClass = tm + "-widget-content";
             var month = t.start.getMonth();
             var today = clearTime(new Date());
-            //console.log("Today is"+month);
             var html = '';
             var classNames = [
                 'fc-day',
@@ -4748,8 +4747,6 @@
         function eventDrop(e, event, dayDelta, minuteDelta, allDay, ev, ui) {
             var oldAllDay = event.allDay;
             var eventId = event._id;
-            //console.log(event);
-            //debugger;
             const response = confirm("¿Esta seguro que desea cambiar su cita a esta hora? Evento eventDrop. Nueva fecha ");
 
 
@@ -6145,3 +6142,9 @@
     ;;
     
     })(jQuery);
+
+    function togglemodal(){
+        var idmodal="#idmodal";
+        $(idmodal).toggle();
+    };
+ 

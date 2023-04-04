@@ -154,8 +154,8 @@
 				
 			],
 			eventClick: function(info) {
-				alert("has pulsado en un evento");
-				console.log(info.event);
+				togglemodal()
+				//alert("has pulsado en un evento");
 			}			
 		});
 		
@@ -230,6 +230,15 @@ box-shadow: 0px 0px 21px 2px rgba(0,0,0,0.18);
 
 <div id='calendar'></div>
 
+<div id='modal'>
+
+    HOLAAAA
+	<?php
+    
+	require_once("/var/www/html/nbs/CustomApp/PlataformaPrueba/scadas/Calendario/Modal/Form_Calendar.php");
+	?>
+
+</div>
 <div style='clear:both'></div>
 </div>
 </body>
