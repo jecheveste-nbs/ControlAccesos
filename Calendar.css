@@ -27,7 +27,7 @@ td.fc-today {
 	}
 .fc-event-inner {
 	font-family: 'Roboto', sans-serif;
-    background: #03a9f3!important;
+    background: #03a9f3;
     color: #FFF!important;
     font-size: 12px!important;
     font-weight: 500!important;
@@ -155,7 +155,22 @@ html .fc,
 	overflow: hidden;
 	}
 	
-	
+.Sala1{
+	background:#9675ce!important;
+	color:white;
+}
+.Sala2{
+	background:rgb(182, 205, 50)!important;
+	color:white;
+}
+.Sala3{
+	background:#BEFFBF!important;
+	color:white;
+}
+.Sala4{
+	background:#9675ce!important;
+	color:white;
+}
 
 /* Cell Styles
 ------------------------------------------------------------------------*/

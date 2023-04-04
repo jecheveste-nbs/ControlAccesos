@@ -66,6 +66,7 @@
         dayNames: ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'],
         dayNamesShort: ['Dom','Lun','Mar','Mie','Jue','Vie','Sab'],
         buttonText: {
+            add:"<span class='fc-text-arrow'>+</span>",
             prev: "<span class='fc-text-arrow'>‹</span>",
             next: "<span class='fc-text-arrow'>›</span>",
             prevYear: "<span class='fc-text-arrow'>«</span>",
@@ -79,6 +80,7 @@
         // jquery-ui theming
         theme: false,
         buttonIcons: {
+            add:'circle-triangle-w',
             prev: 'circle-triangle-w',
             next: 'circle-triangle-e'
         },
@@ -100,12 +102,14 @@
             right: 'title'
         },
         buttonText: {
+            
             prev: "<span class='fc-text-arrow'>›</span>",
             next: "<span class='fc-text-arrow'>‹</span>",
             prevYear: "<span class='fc-text-arrow'>»</span>",
             nextYear: "<span class='fc-text-arrow'>«</span>"
         },
         buttonIcons: {
+            
             prev: 'circle-triangle-e',
             next: 'circle-triangle-w'
         }
@@ -120,7 +124,7 @@
     
     
     $.fn.fullCalendar = function(options) {
-    
+        console.log(options.events);
     
         // method calling
         if (typeof options == 'string') {
@@ -205,6 +209,7 @@
         t.prevYear = prevYear;
         t.nextYear = nextYear;
         t.today = today;
+        
         t.gotoDate = gotoDate;
         t.incrementDate = incrementDate;
         t.formatDate = function(format, date) { return formatDate(format, date, options) };
@@ -527,6 +532,7 @@
         
         // called when event data arrives
         function reportEvents(_events) {
+            
             events = _events;
             renderEvents();
         }
@@ -2355,6 +2361,7 @@
             var contentClass = tm + "-widget-content";
             var month = t.start.getMonth();
             var today = clearTime(new Date());
+            //console.log("Today is"+month);
             var html = '';
             var classNames = [
                 'fc-day',
@@ -3963,6 +3970,7 @@
             var url = event.url;
             var skinCss = getSkinCss(event, opt);
             var classes = ['fc-event', 'fc-event-vert'];
+
             if (isEventDraggable(event)) {
                 classes.push('fc-event-draggable');
             }
@@ -4640,6 +4648,7 @@
         function setEventData(events) { // events are already normalized at this point
             eventsByID = {};
             var i, len=events.length, event;
+            console.log("setEventData está mal");
             for (i=0; i<len; i++) {
                 event = events[i];
                 if (eventsByID[event._id]) {
@@ -4740,27 +4749,45 @@
         function eventDrop(e, event, dayDelta, minuteDelta, allDay, ev, ui) {
             var oldAllDay = event.allDay;
             var eventId = event._id;
-            const response = confirm("¿Esta seguro que desea cambiar su cita a esta hora?");
-            console.log(response);
-            alert("hay que cambiar en eventDrop");
-            moveEvents(eventsByID[eventId], dayDelta, minuteDelta, allDay);
-            trigger(
-                'eventDrop',
-                e,
-                event,
-                dayDelta,
-                minuteDelta,
-                allDay,
+            //console.log(event);
+            //debugger;
+            const response = confirm("¿Esta seguro que desea cambiar su cita a esta hora? Evento eventDrop. Nueva fecha ");
 
-                function() {
-                    // TODO: investigate cases where this inverse technique might not work
-                    moveEvents(eventsByID[eventId], -dayDelta, -minuteDelta, oldAllDay);
-                    reportEventChange(eventId);
-                },
-                ev,
-                ui
-            );
-            reportEventChange(eventId);
+
+            if (response==true){
+                var data_send = {};
+                data_send["Key"] = "changeEventDate";
+                data_send["data"] = {};
+                data_send["data"]["IdEvent"] = "test";
+                var url_api = "../api/index.php";
+                $.post( url_api, data_send,function( data ) {
+                    alert(data);
+                });
+
+                moveEvents(eventsByID[eventId], dayDelta, minuteDelta, allDay);
+                trigger(
+                    'eventDrop',
+                    e,
+                    event,
+                    dayDelta,
+                    minuteDelta,
+                    allDay,
+
+                    function() {
+                        // TODO: investigate cases where this inverse technique might not work
+                        moveEvents(eventsByID[eventId], -dayDelta, -minuteDelta, oldAllDay);
+                        reportEventChange(eventId);
+                    },
+                    ev,
+                    ui
+                );
+                reportEventChange(eventId);
+            }
+            else{
+                moveEvents(eventsByID[eventId], 0, 0, oldAllDay);
+                reportEventChange(eventId);
+
+            }
         }
         
         
@@ -4782,6 +4809,7 @@
                 ui
             );
             reportEventChange(eventId);
+            
         }
         
         
@@ -5358,7 +5386,8 @@
                     skinCss +
                     "'" +
                 ">" +
-                "<div class='fc-event-inner'>";
+                "<div class='fc-event-inner "+event.sala+"'>";
+
             if (!event.allDay && segment.isStart) {
                 html +=
                     "<span class='fc-event-time'>" +

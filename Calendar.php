@@ -149,7 +149,8 @@
                         $fecha=explode("-",$iRow["fechaentrada"]);
                         $horasalida=explode(":",$iRow["horasalida"]);
                         $horaentrada=explode(":",$iRow["horaentrada"]);
-                        echo("{id: '".$iRow["idreunion"]."',title:'".$iRow["NombreReunion"]."',start: new Date(".$fecha[0].",".$fecha[1].",".$fecha[2].",".$horaentrada[0].",".$horaentrada[1].",".$horaentrada[2]."),end:new Date(".$fecha[0].",".$fecha[1].",".$fecha[2].",".$horasalida[0].",".$horasalida[1].",".$horasalida[2]."),allDay:false,className:'important'}");
+						$mes=$fecha[1]-1;				# La fecha empieza en 0 por lo que enero 2023-01-19 el evento cree que es 19 febrero de 2023.
+                        echo("{id: '".$iRow["idreunion"]."',sala:'".$iRow["IdSala"]."',title:'".$iRow["NombreReunion"]."',start: new Date(".$fecha[0].",".$mes.",".$fecha[2].",".$horaentrada[0].",".$horaentrada[1].",".$horaentrada[2]."),end:new Date(".$fecha[0].",".$mes.",".$fecha[2].",".$horasalida[0].",".$horasalida[1].",".$horasalida[2]."),allDay:false,className:'important'}");
                     }
                 ?>
 				
